@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Codextended
 
 public struct PiPhoto: Codable {
     public let id:Int
@@ -28,7 +29,7 @@ public struct PiPhoto: Codable {
     public let comments:Int
     public let userId:Int
     public let user:String
-    public let userImage:URL
+    public let userImage:URL?
     public var userURL:URL {
         let base = URL(string: "https://pixabay.com/users/")!
         return base.appendingPathComponent(user)
@@ -74,5 +75,31 @@ public struct PiPhoto: Codable {
         case userId="user_id"
         case user
         case userImage="userImageURL"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        id = try decoder.decode(CodingKeys.id)
+        
+        photoPage = try decoder.decode(CodingKeys.photoPage)
+        tags   = try decoder.decode(CodingKeys.tags)
+        preview    = try decoder.decode(CodingKeys.preview)
+        previewWidth    = try decoder.decode(CodingKeys.previewWidth)
+        previewHeight    = try decoder.decode(CodingKeys.previewHeight)
+        webformat    = try decoder.decode(CodingKeys.webformat)
+        webformatWidth    = try decoder.decode(CodingKeys.webformatWidth)
+        webformatHeight    = try decoder.decode(CodingKeys.webformatHeight)
+        largeImage    = try decoder.decode(CodingKeys.largeImage)
+        _fullHD   = try decoder.decodeIfPresent(CodingKeys._fullHD)
+        _url    = try decoder.decodeIfPresent(CodingKeys._url)
+        width    = try decoder.decode(CodingKeys.width)
+        height    = try decoder.decode(CodingKeys.height)
+        views    = try decoder.decode(CodingKeys.views)
+        downloads   = try decoder.decode(CodingKeys.downloads)
+        likes   = try decoder.decode(CodingKeys.likes)
+        comments    = try decoder.decode(CodingKeys.comments)
+        userId   = try decoder.decode(CodingKeys.userId)
+        user   = try decoder.decode(CodingKeys.user)
+        //sometimes userImage is "" which doesn't decode as a URL
+        userImage   = try? decoder.decode(CodingKeys.userImage)
     }
 }

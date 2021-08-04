@@ -91,7 +91,43 @@ final class PiPhotoTests: XCTestCase {
         let photo = try! decoder.decode(PiPhoto.self, from: data)
     
         //returns fullHDURL
-        XCTAssertEqual(photo.url, URL(string: "https://pixabay.com/get/ed6a9369fd0a76647_1920.jpg")!)
+        XCTAssertEqual(photo.url, URL(string: "https://pixabay.com/get/ed6a99fd0a76647_1280.jpg")!)
+    }
+    
+    func testHandlesBlankUserImage() {
+        let string = """
+            {
+              "id": 3821656,
+              "pageURL": "https://pixabay.com/photos/dentist-mirror-dental-3821656/",
+              "type": "photo",
+              "tags": "dentist mirror, dental, dental examination",
+              "previewURL": "https://cdn.pixabay.com/photo/2018/11/17/18/33/dentist-mirror-3821656_150.png",
+              "previewWidth": 150,
+              "previewHeight": 123,
+              "webformatURL": "https://pixabay.com/get/gda4388a2492b62348b30d3dbf1fc9cfdf5f12c534a166e364deadf525c70f4c0602025212a7fb6cdcae8cd5baf81aaf2f8de5c100aa909e89cde4989189e0492_640.png",
+              "webformatWidth": 640,
+              "webformatHeight": 527,
+              "largeImageURL": "https://pixabay.com/get/g23ec782bb35e5a19dba092f8e04038463bbfa89eaeb4f9b0c092d3f0643b71fa98015ddc06517785ea062f750bcfa19f09429f214ce7ba1e61e7576c2000e4bf_1280.png",
+              "imageWidth": 13154,
+              "imageHeight": 10833,
+              "imageSize": 19842357,
+              "views": 2490,
+              "downloads": 1435,
+              "collections": 10,
+              "likes": 19,
+              "comments": 31,
+              "user_id": 8385,
+              "user": "8385",
+              "userImageURL": ""
+            }
+            """
+        let data = string.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        let photo = try? decoder.decode(PiPhoto.self, from: data)
+    
+        //returns fullHDURL
+        XCTAssertNotNil(photo)
     }
     
     
