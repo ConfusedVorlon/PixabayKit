@@ -19,7 +19,7 @@ public class PiSearch {
     public var maxPhotos:Int?
     
     init (searchTerm: String? = nil, perPage: Int = 200, minSize:CGSize = .zero, completion: @escaping (PiResult)->Void){
-        self.minSize = CGSize(width: minSize.width.int, height: minSize.height.int)
+        self.minSize = minSize
         self.searchTerm = searchTerm
         self.perPage = [3, perPage, 200].sorted()[1]
         self.completion = completion
@@ -85,8 +85,8 @@ public class PiSearch {
         urlC["image_type"]="photo"
         urlC["page"]="\(page)"
         urlC["per_page"]="\(perPage)"
-        urlC["min_width"]="\(minSize.width)"
-        urlC["min_height"]="\(minSize.height)"
+        urlC["min_width"]="\(minSize.width.int)"
+        urlC["min_height"]="\(minSize.height.int)"
         
         
         if let searchTerm = searchTerm {
