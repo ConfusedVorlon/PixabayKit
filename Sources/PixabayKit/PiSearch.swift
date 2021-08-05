@@ -46,7 +46,7 @@ public class PiSearch {
         
         let url = url(page: nextPage)
 
-        AF.request(url,
+        PiClient.shared.sessionManager.request(url,
                    method: .get)
             .validate(statusCode: 200..<300)
             .responseDecodable(of:PiSearchResponse.self) {
